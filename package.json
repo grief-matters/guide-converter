@@ -1,0 +1,19 @@
+{
+  "name": "guide-converter",
+  "version": "1.0.0",
+  "description": "Script to convert the Guide from a Word docx file to JSON data.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "@sanity/client": "^6.1.5",
+    "dotenv": "^16.3.1",
+    "murmurhash": "^2.0.1",
+    "node-pandoc": "^0.3.0"
+  }
+}
