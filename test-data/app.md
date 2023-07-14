@@ -18,3 +18,18 @@ in child psychology and bereaved young people." Free.
 This award-winning app is intended to support children and adolescents
 who have lost a loved one. It is a "therapeutic game created by experts
 in child psychology and bereaved young people." Free.
+
+[Empathy -- Loss Companion](https://play.google.com/store/apps/details?id=com.empathy.companion)
+This award-winning app offers guidance and "dedicated support
+around-the-clock" to help families navigate the practical aspects of the
+loss, including financial, legal, emotional, or logistical issues they
+might be facing. The app offers basic features for free; premium
+features such as dedicated support are available for a fee.
+
+[Sands Bereavement Support](https://www.sands.org.uk/support-you/how-we-offer-support/sands-bereavement-support-app)
+Sands developed this app "for parents and families who have experienced
+the death of a baby. It aims to help bereaved parents find the right
+information and support at the right time." The app provides various
+types of information, such as "how to say goodbye to your baby,"
+returning to work, and more. Local support groups are provided based in
+the UK. Free.

@@ -14,7 +14,7 @@ anxiety, depression, suicide. Text HOME to 741741. Crisis Text Line is
 powered by volunteer Crisis Counselors. Available in English and
 Spanish.
 
-[NAMI HelpLine](https://www.nami.org/help)
+[NAMI HelpLine](https://www.empathy.com/fake-helpline)
 National Alliance on Mental
 Illness (NAMI) HelpLine volunteers are working to answer questions,
 offer support and provide practical next steps...We are a free,

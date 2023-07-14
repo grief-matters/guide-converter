@@ -2,28 +2,12 @@ import "dotenv/config";
 import { readdir } from "node:fs/promises";
 import { readFile, writeFile } from "node:fs/promises";
 import { createClient } from "@sanity/client";
-import { convertWebsitesMDToDocuments } from "./convertWebsites.js";
-import { convertMDResourcesToDocuments } from "./convertResources.js";
-import { convertMDPeerSupportResourcesToDocuments } from "./convertPeerSupportResource.js";
-import { convertMDAppsToDocuments } from "./convertApps.js";
+import { convertMarkdownToDocuments, docTypes } from "./conversionScripts.js";
 
 const args = process.argv.slice(2);
 const isTest = args.includes("--test-data");
+const isLocalWrite = args.includes("--write-local");
 const dirUrl = isTest ? "./test-data" : "./data";
-
-const markdownConversionFunctionMap = {
-  app: convertMDAppsToDocuments,
-  article: convertWebsitesMDToDocuments,
-  crisisResource: () => undefined,
-  forum: convertMDResourcesToDocuments,
-  memorial: convertMDResourcesToDocuments,
-  peerSupportResource: convertMDPeerSupportResourcesToDocuments,
-  story: convertMDResourcesToDocuments,
-  therapyResource: convertMDResourcesToDocuments,
-  website: () => undefined,
-};
-
-const docTypes = Object.keys(markdownConversionFunctionMap);
 
 const client = createClient({
   projectId: process.env.SANITY_PROJECT_ID,
@@ -41,7 +25,8 @@ try {
   const contents = await readFile(filePath, { encoding: "utf8" });
 
   if (contents) {
-    websiteDocs = convertWebsitesMDToDocuments(contents);
+    // websiteDocs = convertWebsitesMDToDocuments(contents);
+    websiteDocs = convertMarkdownToDocuments(contents, "website");
   } else {
     throw new Error("No parsed websites");
   }
@@ -77,11 +62,7 @@ try {
     const filePath = new URL(`${dirUrl}/${file}`, import.meta.url);
     const contents = await readFile(filePath, { encoding: "utf8" });
 
-    const docs = markdownConversionFunctionMap[docType](
-      contents,
-      docType,
-      websiteDocs
-    );
+    const docs = convertMarkdownToDocuments(contents, docType, websiteDocs);
 
     if (docs) {
       resourceDocs.push(...docs);
@@ -96,10 +77,10 @@ try {
 try {
   const documents = [...websiteDocs, ...resourceDocs];
 
-  if (isTest) {
+  if (isTest || isLocalWrite) {
     writeDocumentsToJSONOutput(documents);
   } else {
-    createDocuments(documents);
+    createDocuments();
   }
 } catch (e) {
   console.error(e);
@@ -109,16 +90,15 @@ function writeDocumentsToJSONOutput(documents) {
   writeFile("./test-output/output.json", JSON.stringify(documents, null, 4));
 }
 
-function createDocuments(documents) {
-  console.log("createDocuments");
-  // let transaction = client.transaction();
+function createDocuments() {
+  let transaction = client.transaction();
 
-  // websiteDocs.forEach((doc) => {
-  //   transaction.createOrReplace(doc);
-  // });
-  // storyDocs.forEach((doc) => {
-  //   transaction.createOrReplace(doc);
-  // });
+  websiteDocs.forEach((doc) => {
+    transaction.createOrReplace(doc);
+  });
+  resourceDocs.forEach((doc) => {
+    transaction.createOrReplace(doc);
+  });
 
-  // return transaction.commit();
+  return transaction.commit();
 }
